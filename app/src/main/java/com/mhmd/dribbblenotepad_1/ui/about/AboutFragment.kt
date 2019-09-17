@@ -1,4 +1,4 @@
-package com.mhmd.dribbblenotepad_1.ui.tools
+package com.mhmd.dribbblenotepad_1.ui.about
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,20 +10,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.mhmd.dribbblenotepad_1.R
 
-class ToolsFragment : Fragment() {
+class AboutFragment : Fragment() {
 
-    private lateinit var toolsViewModel: ToolsViewModel
+    private lateinit var aboutViewModel: AboutViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        toolsViewModel =
-            ViewModelProviders.of(this).get(ToolsViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_tools, container, false)
-        val textView: TextView = root.findViewById(R.id.text_tools)
-        toolsViewModel.text.observe(this, Observer {
+        aboutViewModel =
+            ViewModelProviders.of(this).get(AboutViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_about, container, false)
+        val textView: TextView = root.findViewById(R.id.text_about)
+        aboutViewModel.text.observe(this, Observer {
             textView.text = it
         })
         return root

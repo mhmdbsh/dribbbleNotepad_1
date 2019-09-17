@@ -15,6 +15,9 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -48,11 +51,11 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:2.1.0"
     annotationProcessor "androidx.lifecycle:lifecycle-common-java8:2.1.0"
 
-    //https://android-arsenal.com/details/1/5759
     //Android Unsplash
+    //https://android-arsenal.com/details/1/5759
     implementation 'com.kc.androidunsplash:androidunsplash:1.0.5'
 
-    //https://android-arsenal.com/details/1/5621
     //Quoteable
+    //https://android-arsenal.com/details/1/5621
     implementation 'com.github.robertsimoes:Quoteable:1.0'
 }
