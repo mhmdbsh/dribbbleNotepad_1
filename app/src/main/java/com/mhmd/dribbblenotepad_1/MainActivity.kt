@@ -1,7 +1,6 @@
 package com.mhmd.dribbblenotepad_1
 
 import android.os.Bundle
-import android.view.Gravity
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -11,15 +10,14 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity() {
-
+    
     private lateinit var appBarConfiguration: AppBarConfiguration
-
-    var drawerLayout: DrawerLayout? = null
-
+    private var drawerLayout: DrawerLayout? = null
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        
         drawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
@@ -27,19 +25,16 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_about, R.id.action_settings
+                R.id.nav_home, R.id.nav_about, R.id.nav_settings
             ), drawerLayout
         )
         navView.setupWithNavController(navController)
     }
-
-
+    
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
-
-    fun openMenu() {
-        drawerLayout?.openDrawer(Gravity.RIGHT)
-    }
+    
+    
 }
