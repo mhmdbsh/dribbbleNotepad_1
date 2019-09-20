@@ -7,7 +7,9 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
+import androidx.room.Room
 import com.google.android.material.navigation.NavigationView
+import com.mhmd.dribbblenotepad_1.data.NoteDatabase
 
 class MainActivity : AppCompatActivity() {
     
@@ -18,6 +20,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         
+//        var noteDatabase = Room.databaseBuilder(
+//            applicationContext, NoteDatabase::class.java, "note_database"
+//        ).build()
+//
         drawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
