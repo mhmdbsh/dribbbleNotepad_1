@@ -1,23 +1,18 @@
 package com.mhmd.dribbblenotepad_1.ui.note
 
 import android.animation.Animator
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewAnimationUtils
-import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.view.*
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.animation.doOnEnd
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.mhmd.dribbblenotepad_1.R
 import kotlinx.android.synthetic.main.fragment_note.*
+import kotlinx.coroutines.handleExceptionViaHandler
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.max
@@ -25,7 +20,27 @@ import kotlin.math.max
 class NoteFragment : Fragment() {
     
     
-    var noteColor = colors.WHITE
+    private var noteColor = colors.WHITE
+    private var location = IntArray(2)
+    private var centerX = 0
+    private var centerY = 0
+    private var isBlack = true
+    private lateinit var fadeOutAnimation: Animation
+    private lateinit var fadeInAnimation: Animation
+    
+    private lateinit var tableRow: TableRow
+    private lateinit var title: EditText
+    private lateinit var body: EditText
+    private lateinit var textDate: TextView
+    private lateinit var background: ImageView
+    private lateinit var ovalBlue: ImageView
+    private lateinit var ovalRed: ImageView
+    private lateinit var ovalWhite: ImageView
+    private lateinit var ovalYellow: ImageView
+    private lateinit var ovalGreen: ImageView
+    private lateinit var imageBack: ImageView
+    private lateinit var window: FrameLayout
+    private lateinit var topArea: ConstraintLayout
     
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,78 +51,58 @@ class NoteFragment : Fragment() {
         
         val date = SimpleDateFormat("MMM - dd", Locale.getDefault()).format(Date())
         
-        val background: ImageView = root.findViewById(R.id.image_background)
-        val noteContainer: ConstraintLayout = root.findViewById(R.id.note_container)
-        val textDate: TextView = root.findViewById(R.id.text_date)
-        val title: EditText = root.findViewById(R.id.text_title)
-        val body: EditText = root.findViewById(R.id.text_body)
-        val ovalBlue: ImageView = root.findViewById(R.id.oval_blue)
-        val ovalRed: ImageView = root.findViewById(R.id.oval_red)
-        val ovalWhite: ImageView = root.findViewById(R.id.oval_white)
-        val ovalYellow: ImageView = root.findViewById(R.id.oval_yellow)
-        val ovalGreen: ImageView = root.findViewById(R.id.oval_green)
-        val imageBack: ImageView = root.findViewById(R.id.image_back)
+        background = root.findViewById(R.id.image_background)
+        textDate = root.findViewById(R.id.text_date)
+        title = root.findViewById(R.id.text_title)
+        body = root.findViewById(R.id.text_body)
+        ovalBlue = root.findViewById(R.id.oval_blue)
+        ovalRed = root.findViewById(R.id.oval_red)
+        ovalWhite = root.findViewById(R.id.oval_white)
+        ovalYellow = root.findViewById(R.id.oval_yellow)
+        ovalGreen = root.findViewById(R.id.oval_green)
+        imageBack = root.findViewById(R.id.image_back)
+        window = root.findViewById(R.id.note_container)
+        topArea = root.findViewById(R.id.note_top_area)
         
+        fadeInAnimation = AnimationUtils.loadAnimation(context, R.anim.fade_in)
+        fadeOutAnimation = AnimationUtils.loadAnimation(context, R.anim.fade_out)
         
         textDate.text = date
         
         ovalRed.setOnClickListener {
             noteColor = colors.RED
-            reveal(ovalRed, background, noteContainer)
-            setElementsColor(
-                textDate,
-                title,
-                body,
-                resources.getColor(R.color.colorWhite),
-                imageBack
-            )
+            isBlack = false
+            ovalRed.getLocationOnScreen(location)
+            reveal(ovalRed, background)
+            setElementsColor()
         }
         ovalGreen.setOnClickListener {
             noteColor = colors.GREEN
-            reveal(ovalGreen, background, noteContainer)
-            setElementsColor(
-                textDate,
-                title,
-                body,
-                resources.getColor(R.color.colorWhite),
-                imageBack
-            )
-            
+            isBlack = false
+            ovalGreen.getLocationOnScreen(location)
+            reveal(ovalGreen, background)
+            setElementsColor()
         }
         ovalYellow.setOnClickListener {
             noteColor = colors.YELLOW
-            reveal(ovalYellow, background, noteContainer)
-            setElementsColor(
-                textDate,
-                title,
-                body,
-                resources.getColor(R.color.colorBlack),
-                imageBack
-            )
-            
+            isBlack = true
+            ovalYellow.getLocationOnScreen(location)
+            reveal(ovalYellow, background)
+            setElementsColor()
         }
         ovalBlue.setOnClickListener {
             noteColor = colors.BLUE
-            reveal(ovalBlue, background, noteContainer)
-            setElementsColor(
-                textDate,
-                title,
-                body,
-                resources.getColor(R.color.colorWhite),
-                imageBack
-            )
+            isBlack = false
+            ovalBlue.getLocationOnScreen(location)
+            reveal(ovalBlue, background)
+            setElementsColor()
         }
-        
-        ovalWhite.setOnClickListener{
+        ovalWhite.setOnClickListener {
             noteColor = colors.WHITE
-            reveal(ovalWhite, background, noteContainer)
-            setElementsColor(
-                textDate,
-                title,
-                body,
-                resources.getColor(R.color.colorBlack),
-                imageBack
-            )
+            isBlack = true
+            ovalWhite.getLocationOnScreen(location)
+            reveal(ovalWhite, background)
+            setElementsColor()
         }
         
         imageBack.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.go_to_home))
@@ -115,11 +110,9 @@ class NoteFragment : Fragment() {
         return root
     }
     
-    private fun setElementsColor(
-        textDate: TextView, title: EditText, body: EditText, color: Int
-        , imageBack: ImageView
-    ) {
-        if (color == resources.getColor(R.color.colorWhite)) {
+    private fun setElementsColor() {
+        topArea.startAnimation(fadeInAnimation)
+        if (!isBlack) {
             textDate.setTextColor(resources.getColor(R.color.colorWhite))
             title.setTextColor(resources.getColor(R.color.colorWhite))
             title.setHintTextColor(resources.getColor(R.color.colorWhite))
@@ -134,13 +127,13 @@ class NoteFragment : Fragment() {
             body.setHintTextColor(resources.getColor(R.color.colorBlack))
             imageBack.setImageResource(R.drawable.ic_arrow_left_black)
         }
-        
     }
     
-    fun reveal(oval: ImageView, background: ImageView, container: ConstraintLayout) {
+    fun reveal(oval: ImageView, background: ImageView) {
         
-        var centerX = background.right
-        var centerY = background.bottom
+        centerX = location[0] + ovalWhite.width / 2
+        centerY = location[1] - ovalWhite.height / 4
+        
         val radius = max(background.width, background.height) * 2.0f
         var color: Int = R.color.colorWhite
         
@@ -154,32 +147,23 @@ class NoteFragment : Fragment() {
             R.id.oval_blue -> {
                 color = R.color.colorBlue
                 ring_blue.visibility = View.VISIBLE
-                centerX = background.right - 190
-                centerY = background.bottom - 85
             }
             R.id.oval_red -> {
                 color = R.color.colorRed
                 ring_red.visibility = View.VISIBLE
-                centerX = background.right - 295
-                centerY = background.bottom - 85
             }
             R.id.oval_green -> {
                 color = R.color.colorGreen
                 ring_green.visibility = View.VISIBLE
-                centerX = background.right - 400
-                centerY = background.bottom - 85
+                
             }
             R.id.oval_yellow -> {
                 color = R.color.colorYellow
                 ring_yellow.visibility = View.VISIBLE
-                centerX = background.right - 505
-                centerY = background.bottom - 85
             }
             R.id.oval_white -> {
                 color = R.color.colorWhite
                 ring_white.visibility = View.VISIBLE
-                centerX = background.right - 85
-                centerY = background.bottom - 85
             }
         }
         background.setImageResource(color)
@@ -188,8 +172,11 @@ class NoteFragment : Fragment() {
         reveal.doOnEnd {
             note_container.setBackgroundColor(resources.getColor(color))
         }
+        reveal.duration = 500
         reveal.start()
+        
     }
+    
 }
 
 enum class colors {

@@ -1,8 +1,7 @@
-package com.mhmd.dribbblenotepad_1.data.dao
+package com.mhmd.dribbblenotepad_1.data
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.mhmd.dribbblenotepad_1.data.model.Note
 
 @Dao
 interface NoteDao {
