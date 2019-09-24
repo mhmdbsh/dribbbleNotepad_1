@@ -1,19 +1,26 @@
 package com.mhmd.dribbblenotepad_1.ui.note
 
 import android.animation.Animator
+import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.animation.doOnEnd
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import com.mhmd.dribbblenotepad_1.R
+import com.mhmd.dribbblenotepad_1.data.Note
+import com.mhmd.dribbblenotepad_1.data.NoteDatabase
 import kotlinx.android.synthetic.main.fragment_note.*
 import kotlinx.coroutines.handleExceptionViaHandler
 import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 import java.util.*
 import kotlin.math.max
 
@@ -27,8 +34,8 @@ class NoteFragment : Fragment() {
     private var isBlack = true
     private lateinit var fadeOutAnimation: Animation
     private lateinit var fadeInAnimation: Animation
+    private lateinit var noteDatabase: NoteDatabase
     
-    private lateinit var tableRow: TableRow
     private lateinit var title: EditText
     private lateinit var body: EditText
     private lateinit var textDate: TextView
@@ -50,6 +57,7 @@ class NoteFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_note, container, false)
         
         val date = SimpleDateFormat("MMM - dd", Locale.getDefault()).format(Date())
+        val time = SimpleDateFormat("K:m a", Locale.getDefault()).format(Date())
         
         background = root.findViewById(R.id.image_background)
         textDate = root.findViewById(R.id.text_date)
@@ -64,10 +72,17 @@ class NoteFragment : Fragment() {
         window = root.findViewById(R.id.note_container)
         topArea = root.findViewById(R.id.note_top_area)
         
+        noteDatabase = NoteDatabase.INSTANCE!!
+        
         fadeInAnimation = AnimationUtils.loadAnimation(context, R.anim.fade_in)
         fadeOutAnimation = AnimationUtils.loadAnimation(context, R.anim.fade_out)
         
         textDate.text = date
+        
+        title.requestFocus()
+        
+        val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
         
         ovalRed.setOnClickListener {
             noteColor = colors.RED
@@ -105,7 +120,20 @@ class NoteFragment : Fragment() {
             setElementsColor()
         }
         
-        imageBack.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.go_to_home))
+        imageBack.setOnClickListener {
+            imm.hideSoftInputFromWindow(view?.windowToken, 0)
+            
+            if (title.text.isNotEmpty() || body.text.isNotEmpty()) {
+                val note = Note(
+                    title.text.toString(), body.text.toString(),
+                    time, noteColor.ordinal
+                )
+                noteDatabase.noteDao().insert(note)
+                
+            }
+            
+            view?.findNavController()?.navigate(R.id.go_to_home)
+        }
         
         return root
     }

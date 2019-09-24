@@ -9,16 +9,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mhmd.dribbblenotepad_1.R
 import com.mhmd.dribbblenotepad_1.data.Note
 
-class NoteAdapter(val noteList: ArrayList<Note>) :
+class NoteAdapter(val noteList: List<Note>) :
     RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
     
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.note_list_row, parent, false)
-        
         return NoteViewHolder(view)
-        
     }
     
     override fun getItemCount(): Int {
@@ -29,6 +27,7 @@ class NoteAdapter(val noteList: ArrayList<Note>) :
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         
         holder.bindItem(noteList[position])
+        
     }
     
     
@@ -39,6 +38,17 @@ class NoteAdapter(val noteList: ArrayList<Note>) :
             val title: TextView = itemView.findViewById(R.id.recycler_textView_title)
             val body: TextView = itemView.findViewById(R.id.recycler_textView_body)
             val ribbon: ImageView = itemView.findViewById(R.id.recycler_imageView_ribbon)
+            
+            date.text = note.date
+            title.text = note.title
+            body.text = note.body
+            when (note.color) {
+                0 -> ribbon.setImageResource(R.drawable.rectangle_black)
+                1 -> ribbon.setImageResource(R.color.colorRed)
+                2 -> ribbon.setImageResource(R.color.colorBlue)
+                3 -> ribbon.setImageResource(R.color.colorGreen)
+                4 -> ribbon.setImageResource(R.color.colorYellow)
+            }
         }
     }
     

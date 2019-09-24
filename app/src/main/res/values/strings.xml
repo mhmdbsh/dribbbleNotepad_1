@@ -18,5 +18,8 @@
         I tried to implement this <a href="https://dribbble.com/shots/2517777-Nick-Parker-Daily-UI-13">idea</a>
         on dribbble by <a href="https://dribbble.com/iamnickparker">Nikita Prilepskiy</a>
     </string>
+    <string name="note_title">Note title</string>
+    <string name="description_ribbon">text colored ribbon</string>
+    <string name="sample_time">08:45 AM</string>
 
 </resources>

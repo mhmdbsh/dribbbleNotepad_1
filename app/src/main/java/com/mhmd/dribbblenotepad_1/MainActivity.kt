@@ -1,7 +1,6 @@
 package com.mhmd.dribbblenotepad_1
 
 import android.os.Bundle
-import android.view.Gravity
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -9,22 +8,20 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
-import androidx.room.Room
 import com.google.android.material.navigation.NavigationView
+import com.jaredrummler.cyanea.app.CyaneaAppCompatActivity
 import com.mhmd.dribbblenotepad_1.data.NoteDatabase
 
 class MainActivity : AppCompatActivity() {
     
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private var drawerLayout: DrawerLayout? = null
+    private lateinit var drawerLayout: DrawerLayout
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         
-        var noteDatabase = Room.databaseBuilder(
-            applicationContext, NoteDatabase::class.java, "note_database"
-        ).build()
+        var noteDatabase = NoteDatabase.geNoteDatabase(applicationContext)
         
         
         drawerLayout = findViewById(R.id.drawer_layout)
@@ -54,6 +51,10 @@ class MainActivity : AppCompatActivity() {
         } else {
             super.onBackPressed()
         }
+    }
+    
+    fun openDrawer() {
+        drawerLayout.openDrawer(GravityCompat.START)
     }
     
     
