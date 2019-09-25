@@ -11,7 +11,10 @@
     <color name="colorRed">#EF476F</color>
     <color name="colorBlue">#26547C</color>
     <color name="colorGreen">#06D6A0</color>
-    <color name="colorGray">#3D3A3A</color>
+    <color name="colorGray">#464646</color>
+    <color name="colorGrayLight">#808080</color>
+    <color name="colorTransparent">#00000000</color>
+    <color name="colorDirtyWhite">#f0f0f0</color>
 
 
 </resources>

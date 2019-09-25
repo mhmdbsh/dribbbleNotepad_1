@@ -3,24 +3,27 @@ package com.mhmd.dribbblenotepad_1.ui.note
 import android.animation.Animator
 import android.content.Context
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewAnimationUtils
+import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
-import android.widget.*
+import android.widget.EditText
+import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.animation.doOnEnd
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import com.mhmd.dribbblenotepad_1.R
 import com.mhmd.dribbblenotepad_1.data.Note
 import com.mhmd.dribbblenotepad_1.data.NoteDatabase
 import kotlinx.android.synthetic.main.fragment_note.*
-import kotlinx.coroutines.handleExceptionViaHandler
 import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
 import java.util.*
 import kotlin.math.max
 
@@ -32,6 +35,7 @@ class NoteFragment : Fragment() {
     private var centerX = 0
     private var centerY = 0
     private var isBlack = true
+    private var isYellow = false
     private lateinit var fadeOutAnimation: Animation
     private lateinit var fadeInAnimation: Animation
     private lateinit var noteDatabase: NoteDatabase
@@ -101,6 +105,7 @@ class NoteFragment : Fragment() {
         ovalYellow.setOnClickListener {
             noteColor = colors.YELLOW
             isBlack = true
+            isYellow = true
             ovalYellow.getLocationOnScreen(location)
             reveal(ovalYellow, background)
             setElementsColor()
@@ -114,7 +119,7 @@ class NoteFragment : Fragment() {
         }
         ovalWhite.setOnClickListener {
             noteColor = colors.WHITE
-            isBlack = true
+            isBlack = AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_YES
             ovalWhite.getLocationOnScreen(location)
             reveal(ovalWhite, background)
             setElementsColor()
@@ -147,6 +152,7 @@ class NoteFragment : Fragment() {
             body.setTextColor(resources.getColor(R.color.colorWhite))
             body.setHintTextColor(resources.getColor(R.color.colorWhite))
             imageBack.setImageResource(R.drawable.ic_arrow_left_white)
+            
         } else {
             textDate.setTextColor(resources.getColor(R.color.colorBlack))
             title.setTextColor(resources.getColor(R.color.colorBlack))
@@ -190,7 +196,12 @@ class NoteFragment : Fragment() {
                 ring_yellow.visibility = View.VISIBLE
             }
             R.id.oval_white -> {
-                color = R.color.colorWhite
+                color =
+                    if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
+                        R.color.colorBlack
+                    else
+                        R.color.colorDirtyWhite
+                
                 ring_white.visibility = View.VISIBLE
             }
         }

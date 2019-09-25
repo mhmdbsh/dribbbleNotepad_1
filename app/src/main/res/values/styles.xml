@@ -1,13 +1,47 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <!-- Light/Day Mode theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="android:fontFamily">@font/gotham_book</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="backgroundColor">@color/colorDirtyWhite</item>
+        <item name="cardBackground">@color/colorWhite</item>
+        <item name="textColorTitle">@color/colorBlack</item>
+        <item name="textColorTime">@color/colorGrayLight</item>
+        <item name="textColorSubtitle">@color/colorGray</item>
+        <item name="tintColor">@color/colorBlack</item>
+        <item name="buttonColor">@color/colorPrimary</item>
+        <item name="BlackWhite">@color/colorBlack</item>
+        <item name="hintColor">@color/colorGray</item>
+        <item name="BlackWhiteRing">@color/colorBlack</item>
+        <item name="BlackWhiteOval">@color/colorDirtyWhite</item>
     </style>
+
+
+    <!-- Dark/Night Mode theme. -->
+    <style name="DarkMode" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:fontFamily">@font/gotham_book</item>
+        <item name="colorPrimary">@color/colorRed</item>
+        <item name="colorPrimaryDark">@color/colorBlack</item>
+        <item name="colorAccent">@color/colorRed</item>
+        <item name="backgroundColor">@color/colorBlack</item>
+        <item name="cardBackground">@color/colorBlackLight</item>
+        <item name="textColorTitle">@color/colorWhite</item>
+        <item name="textColorTime">@color/colorWhite</item>
+        <item name="textColorSubtitle">@color/colorWhite</item>
+        <item name="tintColor">@color/colorWhite</item>
+        <item name="buttonColor">@color/colorPrimary</item>
+        <item name="BlackWhite">@color/colorWhite</item>
+        <item name="hintColor">@color/colorWhite</item>
+        <item name="BlackWhiteRing">@color/colorWhite</item>
+        <item name="BlackWhiteOval">@color/colorBlack</item>
+    </style>
+
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
@@ -17,5 +51,6 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 
 </resources>

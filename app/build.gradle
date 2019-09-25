@@ -66,13 +66,10 @@ dependencies {
     //Room dependencies
     implementation 'android.arch.persistence.room:runtime:2.1.0'
     kapt 'android.arch.persistence.room:compiler:2.1.0'
-
     implementation 'androidx.room:room-rxjava2:2.1.0'
 
-    //Cyanea
-    //https://android-arsenal.com/details/1/7340
-    implementation 'com.jaredrummler:cyanea:1.0.2'
 
+    implementation 'com.github.garretyoder:Colorful:2.3.4'
 
 
 }

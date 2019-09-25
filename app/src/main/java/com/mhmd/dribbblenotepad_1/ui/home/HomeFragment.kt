@@ -61,7 +61,7 @@ class HomeFragment : Fragment() {
         val recyclerview: RecyclerView = root.findViewById(R.id.home_recycler)
         
         recyclerview.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-        val adapter = NoteAdapter(list)
+        val adapter = NoteAdapter(list.reversed())
         recyclerview.adapter = adapter
         
         return root

@@ -2,6 +2,7 @@ package com.mhmd.dribbblenotepad_1
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -9,7 +10,6 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
-import com.jaredrummler.cyanea.app.CyaneaAppCompatActivity
 import com.mhmd.dribbblenotepad_1.data.NoteDatabase
 
 class MainActivity : AppCompatActivity() {
@@ -18,6 +18,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
     
     override fun onCreate(savedInstanceState: Bundle?) {
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
+            setTheme(R.style.DarkMode)
+        else
+            setTheme(R.style.AppTheme)
+        
+        
+        
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         

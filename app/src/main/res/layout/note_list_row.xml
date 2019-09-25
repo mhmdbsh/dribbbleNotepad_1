@@ -10,72 +10,69 @@
         android:id="@+id/recycler_textView_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/gotham_book"
         android:maxLines="1"
         android:text="@string/sample_time"
-        android:textColor="@color/colorBlack"
+        android:textColor="?attr/textColorTime"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/home_note_card"
+
+    <TableRow
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="8dp"
+        android:background="?attr/cardBackground"
         android:clickable="true"
+        android:elevation="2dp"
         android:focusable="true"
-        android:foreground="?android:attr/selectableItemBackgroundBorderless"
-        app:cardElevation="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recycler_textView_time">
 
-        <TableRow
+        <ImageView
+            android:id="@+id/recycler_imageView_ribbon"
+            android:layout_width="3dp"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/description_ribbon"
+            android:src="@color/colorBlue" />
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/recycler_imageView_ribbon"
-                android:layout_width="3dp"
-                android:layout_height="match_parent"
-                android:contentDescription="@string/description_ribbon"
-                android:src="@color/colorBlue" />
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/recycler_textView_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:layout_marginBottom="8dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/gotham_medium"
+                android:text="@string/note_title"
+                android:textColor="?attr/textColorTitle"
+                android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/recycler_textView_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/gotham_medium"
-                    android:text="@string/note_title"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="16sp" />
+            <TextView
+                android:id="@+id/recycler_textView_body"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="@font/gotham_book"
+                android:maxLines="3"
+                android:text="@string/about_body"
+                android:textColor="?attr/textColorSubtitle"
+                android:textSize="14sp" />
 
-                <TextView
-                    android:id="@+id/recycler_textView_body"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/gotham_book"
-                    android:maxLines="3"
-                    android:text="@string/about_body"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="14sp" />
+        </LinearLayout>
+    </TableRow>
 
-            </LinearLayout>
-        </TableRow>
 
-    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
