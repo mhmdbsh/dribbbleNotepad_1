@@ -1,7 +1,6 @@
 package com.mhmd.dribbblenotepad_1.data
 
 import android.content.Context
-import android.os.AsyncTask
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase

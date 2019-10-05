@@ -9,8 +9,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mhmd.dribbblenotepad_1.R
 import com.mhmd.dribbblenotepad_1.data.Note
 
-class NoteAdapter(val noteList: List<Note>) :
+//class NoteAdapter(private val noteList: List<Note>) :
+class NoteAdapter() :
+    
     RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
+    
+    private lateinit var noteList: List<Note>
     
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         
@@ -50,6 +54,15 @@ class NoteAdapter(val noteList: List<Note>) :
                 4 -> ribbon.setImageResource(R.color.colorYellow)
             }
         }
+    }
+    
+    fun getNoteAt(position: Int): Note {
+        return noteList[position]
+    }
+    
+    fun setData(noteList: List<Note>) {
+        this.noteList = noteList
+        notifyDataSetChanged()
     }
     
 }

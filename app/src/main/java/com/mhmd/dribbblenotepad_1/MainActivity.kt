@@ -1,5 +1,7 @@
 package com.mhmd.dribbblenotepad_1
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -11,18 +13,32 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.mhmd.dribbblenotepad_1.data.NoteDatabase
+import kotlin.properties.Delegates
 
 class MainActivity : AppCompatActivity() {
     
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var drawerLayout: DrawerLayout
-    
+    private var isDarkMode = false
+    private lateinit var sharedPreferences: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
-        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
-            setTheme(R.style.DarkMode)
-        else
-            setTheme(R.style.AppTheme)
         
+        sharedPreferences =
+            applicationContext.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE)
+        
+        isDarkMode = sharedPreferences.getBoolean("IS_DARK_MODE", false)
+
+
+//        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
+        if (isDarkMode) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            setTheme(R.style.DarkMode)
+            
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            setTheme(R.style.AppTheme)
+            
+        }
         
         
         super.onCreate(savedInstanceState)
